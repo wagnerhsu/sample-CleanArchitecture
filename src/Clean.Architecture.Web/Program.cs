@@ -18,7 +18,9 @@ builder.Services.Configure<CookiePolicyOptions>(options =>
   options.MinimumSameSitePolicy = SameSiteMode.None;
 });
 
-string connectionString = builder.Configuration.GetConnectionString("SqliteConnection");  //Configuration.GetConnectionString("DefaultConnection");
+var connectionString =
+  builder.Configuration
+    .GetConnectionString("SqliteConnection"); //Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext(connectionString);
 
@@ -27,7 +29,7 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddSwaggerGen(c =>
 {
-  c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+  c.SwaggerDoc("v1", new OpenApiInfo {Title = "My API", Version = "v1"});
   c.EnableAnnotations();
 });
 
@@ -44,7 +46,8 @@ builder.Services.Configure<ServiceConfig>(config =>
 builder.Host.ConfigureContainer<ContainerBuilder>(containerBuilder =>
 {
   containerBuilder.RegisterModule(new DefaultCoreModule());
-  containerBuilder.RegisterModule(new DefaultInfrastructureModule(builder.Environment.EnvironmentName == "Development"));
+  containerBuilder.RegisterModule(
+    new DefaultInfrastructureModule(builder.Environment.EnvironmentName == "Development"));
 });
 
 
@@ -64,6 +67,7 @@ else
   app.UseExceptionHandler("/Home/Error");
   app.UseHsts();
 }
+
 app.UseRouting();
 
 app.UseHttpsRedirection();

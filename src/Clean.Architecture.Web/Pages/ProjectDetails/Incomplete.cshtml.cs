@@ -27,6 +27,7 @@ public class IncompleteModel : PageModel
     {
       return;
     }
+
     var spec = new IncompleteItemsSpec();
 
     ToDoItems = spec.Evaluate(project.Items).ToList();

@@ -8,7 +8,7 @@ public class NewItemAddedEvent : BaseDomainEvent
   public Project Project { get; set; }
 
   public NewItemAddedEvent(Project project,
-      ToDoItem newItem)
+    ToDoItem newItem)
   {
     Project = project;
     NewItem = newItem;

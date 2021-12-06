@@ -7,8 +7,8 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Clean.Architecture.Web.Endpoints.ProjectEndpoints;
 
 public class Create : BaseAsyncEndpoint
-    .WithRequest<CreateProjectRequest>
-    .WithResponse<CreateProjectResponse>
+  .WithRequest<CreateProjectRequest>
+  .WithResponse<CreateProjectResponse>
 {
   private readonly IRepository<Project> _repository;
 
@@ -19,13 +19,13 @@ public class Create : BaseAsyncEndpoint
 
   [HttpPost("/Projects")]
   [SwaggerOperation(
-      Summary = "Creates a new Project",
-      Description = "Creates a new Project",
-      OperationId = "Project.Create",
-      Tags = new[] { "ProjectEndpoints" })
+    Summary = "Creates a new Project",
+    Description = "Creates a new Project",
+    OperationId = "Project.Create",
+    Tags = new[] {"ProjectEndpoints"})
   ]
   public override async Task<ActionResult<CreateProjectResponse>> HandleAsync(CreateProjectRequest request,
-      CancellationToken cancellationToken)
+    CancellationToken cancellationToken)
   {
     if (request.Name == null)
     {
@@ -38,8 +38,8 @@ public class Create : BaseAsyncEndpoint
 
     var response = new CreateProjectResponse
     (
-        id: createdItem.Id,
-        name: createdItem.Name
+      createdItem.Id,
+      createdItem.Name
     );
 
     return Ok(response);

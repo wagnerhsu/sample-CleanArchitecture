@@ -32,8 +32,8 @@ public class ProjectController : Controller
       Id = project.Id,
       Name = project.Name,
       Items = project.Items
-                    .Select(item => ToDoItemViewModel.FromToDoItem(item))
-                    .ToList()
+        .Select(item => ToDoItemViewModel.FromToDoItem(item))
+        .ToList()
     };
     return View(dto);
   }

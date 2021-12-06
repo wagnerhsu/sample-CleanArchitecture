@@ -15,7 +15,7 @@ public class AppDbContext : DbContext
   //}
 
   public AppDbContext(DbContextOptions<AppDbContext> options, IMediator? mediator)
-      : base(options)
+    : base(options)
   {
     _mediator = mediator;
   }
@@ -33,18 +33,21 @@ public class AppDbContext : DbContext
     //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
   }
 
-  public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+  public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new())
   {
-    int result = await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
+    var result = await base.SaveChangesAsync(cancellationToken).ConfigureAwait(false);
 
     // ignore events if no dispatcher provided
-    if (_mediator == null) return result;
+    if (_mediator == null)
+    {
+      return result;
+    }
 
     // dispatch events only if save was successful
     var entitiesWithEvents = ChangeTracker.Entries<BaseEntity>()
-        .Select(e => e.Entity)
-        .Where(e => e.Events.Any())
-        .ToArray();
+      .Select(e => e.Entity)
+      .Where(e => e.Events.Any())
+      .ToArray();
 
     foreach (var entity in entitiesWithEvents)
     {

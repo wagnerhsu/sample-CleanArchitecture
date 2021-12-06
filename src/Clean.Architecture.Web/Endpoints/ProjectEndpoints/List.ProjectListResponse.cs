@@ -1,5 +1,4 @@
-﻿
-namespace Clean.Architecture.Web.Endpoints.ProjectEndpoints;
+﻿namespace Clean.Architecture.Web.Endpoints.ProjectEndpoints;
 
 public class ProjectListResponse
 {

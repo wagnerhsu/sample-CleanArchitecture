@@ -13,8 +13,7 @@ public class IndexModel : PageModel
 {
   private readonly IRepository<Project> _repository;
 
-  [BindProperty(SupportsGet = true)]
-  public int ProjectId { get; set; }
+  [BindProperty(SupportsGet = true)] public int ProjectId { get; set; }
   public string Message { get; set; } = "";
 
   public ProjectDTO? Project { get; set; }
@@ -37,9 +36,9 @@ public class IndexModel : PageModel
 
     Project = new ProjectDTO
     (
-        id: project.Id,
-        name: project.Name,
-        items: project.Items
+      project.Id,
+      project.Name,
+      project.Items
         .Select(item => ToDoItemDTO.FromToDoItem(item))
         .ToList()
     );

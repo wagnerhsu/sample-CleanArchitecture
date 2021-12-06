@@ -22,8 +22,7 @@ public class ToDoItemSearchService : IToDoItemSearchService
       var errors = new List<ValidationError>();
       errors.Add(new ValidationError()
       {
-        Identifier = nameof(searchString),
-        ErrorMessage = $"{nameof(searchString)} is required."
+        Identifier = nameof(searchString), ErrorMessage = $"{nameof(searchString)} is required."
       });
       return Result<List<ToDoItem>>.Invalid(errors);
     }
@@ -32,7 +31,10 @@ public class ToDoItemSearchService : IToDoItemSearchService
     var project = await _repository.GetBySpecAsync(projectSpec);
 
     // TODO: Optionally use Ardalis.GuardClauses Guard.Against.NotFound and catch
-    if (project == null) return Result<List<ToDoItem>>.NotFound();
+    if (project == null)
+    {
+      return Result<List<ToDoItem>>.NotFound();
+    }
 
     var incompleteSpec = new IncompleteItemsSearchSpec(searchString);
 
@@ -45,7 +47,7 @@ public class ToDoItemSearchService : IToDoItemSearchService
     catch (Exception ex)
     {
       // TODO: Log details here
-      return Result<List<ToDoItem>>.Error(new[] { ex.Message });
+      return Result<List<ToDoItem>>.Error(new[] {ex.Message});
     }
   }
 

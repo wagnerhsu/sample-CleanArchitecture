@@ -23,6 +23,7 @@ public class ItemCompletedEmailNotificationHandler : INotificationHandler<ToDoIt
   {
     Guard.Against.Null(domainEvent, nameof(domainEvent));
 
-    return _emailSender.SendEmailAsync("test@test.com", "test@test.com", $"{domainEvent.CompletedItem.Title} was completed.", domainEvent.CompletedItem.ToString());
+    return _emailSender.SendEmailAsync("test@test.com", "test@test.com",
+      $"{domainEvent.CompletedItem.Title} was completed.", domainEvent.CompletedItem.ToString());
   }
 }

@@ -24,12 +24,12 @@ public class ProjectsController : BaseApiController
   public async Task<IActionResult> List()
   {
     var projectDTOs = (await _repository.ListAsync())
-        .Select(project => new ProjectDTO
-        (
-            id: project.Id,
-            name: project.Name
-        ))
-        .ToList();
+      .Select(project => new ProjectDTO
+      (
+        project.Id,
+        project.Name
+      ))
+      .ToList();
 
     return Ok(projectDTOs);
   }
@@ -47,12 +47,12 @@ public class ProjectsController : BaseApiController
 
     var result = new ProjectDTO
     (
-        id: project.Id,
-        name: project.Name,
-        items: new List<ToDoItemDTO>
-        (
-            project.Items.Select(i => ToDoItemDTO.FromToDoItem(i)).ToList()
-        )
+      project.Id,
+      project.Name,
+      new List<ToDoItemDTO>
+      (
+        project.Items.Select(i => ToDoItemDTO.FromToDoItem(i)).ToList()
+      )
     );
 
     return Ok(result);
@@ -68,8 +68,8 @@ public class ProjectsController : BaseApiController
 
     var result = new ProjectDTO
     (
-        id: createdProject.Id,
-        name: createdProject.Name
+      createdProject.Id,
+      createdProject.Name
     );
     return Ok(result);
   }
@@ -80,10 +80,16 @@ public class ProjectsController : BaseApiController
   {
     var projectSpec = new ProjectByIdWithItemsSpec(projectId);
     var project = await _repository.GetBySpecAsync(projectSpec);
-    if (project == null) return NotFound("No such project");
+    if (project == null)
+    {
+      return NotFound("No such project");
+    }
 
     var toDoItem = project.Items.FirstOrDefault(item => item.Id == itemId);
-    if (toDoItem == null) return NotFound("No such item.");
+    if (toDoItem == null)
+    {
+      return NotFound("No such item.");
+    }
 
     toDoItem.MarkComplete();
     await _repository.UpdateAsync(project);

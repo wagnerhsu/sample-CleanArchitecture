@@ -8,6 +8,7 @@ public class ProjectDTO : CreateProjectDTO
     Id = id;
     Items = items ?? new List<ToDoItemDTO>();
   }
+
   public int Id { get; set; }
   public List<ToDoItemDTO> Items { get; set; }
 }
@@ -19,5 +20,6 @@ public abstract class CreateProjectDTO
   {
     Name = name;
   }
+
   public string Name { get; set; }
 }
